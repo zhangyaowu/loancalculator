@@ -1,0 +1,68 @@
+<!doctype html>
+<html ng-app='LoanCalculator'>
+<head>
+	<title>房贷计算器</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<link rel="stylesheet" type="text/css" href="bootstrap-3.3.4-dist/css/bootstrap.min.css">
+	<script type="text/javascript" src='js/lib/angular/angular.js'></script>
+	<script type="text/javascript" src='js/controllers.js'></script>
+</head>
+<body ng-controller='LoanCalculatorController'>
+		<h3>房贷计算器</h3>
+		<hr>
+	    <form>
+			<!-- <div class='form-group'>
+				<label for="daikuanbenjin">贷款本金：</label>
+				<input type="text" class="form-control" id="daikuanbenjin" placeholder="请输入贷款本金" ng-model='loan.corpus'>
+			</div> -->
+			<div class='form-group'>
+				<label class="col-sm-2 control-label">贷款本金：</label>
+				<input type="text" placeholder="请输入贷款本金" ng-model='loan.corpus'>
+			</div>
+			<div class='form-group'>
+				<label class="col-sm-2 control-label">年利率:</label>
+				<input type="text" placeholder="请输入年利率" ng-model='loan.mrate'>
+			</div>
+			<div class='form-group'>
+				<label class="col-sm-2 control-label">贷款期(年):</label>
+				<input type="text" placeholder="请输入贷款期" ng-model='loan.period'>
+			</div>
+		</form>
+
+		<button class="btn btn-success" ng-click="loan.getDetailPerMsByBenxi()">
+			<span class="glyphicon glyphicon-user"></span>等额本息
+		</button>
+		<button class="btn btn-success" ng-click="loan.getDetailPerMsByBenjin()">
+			<span class="glyphicon glyphicon-user"></span>等额本金
+		</button>
+
+		<br><hr>
+		<p>还款总额：{{loan.total | number : 2}}</p>
+		<p>总利息：  {{loan.rateTotal | number : 2}}</p>
+
+		<hr>
+		<h3>每月还款明细：</h3>
+		<table class="table table-striped">
+			<thead>
+				<th>月份</th>
+				<th>本月还款</th>
+				<th>本月本金</th>
+				<th>本月利息</th>
+				<th>已还本金总额</th>
+				<th>已还利息总额</th>
+				<th>累计还款</th>
+			</thead>
+			<tbody>
+				<tr ng-repeat='detailPerM in loan.detailPerMs'>
+					<td>第{{$index + 1}}个月</td>
+					<td>{{detailPerM.corpusThisM | number : 2}}</td>
+					<td>{{detailPerM.benjin | number : 2}}</td>
+					<td>{{detailPerM.lixi | number : 2}}</td>
+					<td>{{detailPerM.benjinTotal | number : 2}}</td>
+					<td>{{detailPerM.lixiTotal | number : 2}}</td>
+					<td>{{detailPerM.leiji | number : 2}}</td>
+				</tr>
+			</tbody>
+		</table>
+</body>
+</html>
